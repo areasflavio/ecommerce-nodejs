@@ -6,7 +6,8 @@
 	"author": "Flávio Arêas <vflavio9@gmail.com>",
 	"license": "MIT",
 	"scripts": {
-		"dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts"
+		"dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+		"typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
 	},
 	"dependencies": {
 		"express": "^4.17.1",
