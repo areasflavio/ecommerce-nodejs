@@ -25,7 +25,7 @@ describe('CreateProducts', () => {
 		expect(product).toHaveProperty('id');
 	});
 
-	it('should not be able to create a product thats already registered', async () => {
+	it('should not be able to create a duplicated product', async () => {
 		await createProduct.execute({
 			name: 'Computer',
 			price: 1234.5,
