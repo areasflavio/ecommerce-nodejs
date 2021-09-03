@@ -1,5 +1,7 @@
 import 'reflect-metadata';
 
+import AppError from '@shared/errors/AppError';
+
 import FakeCustomerRepository from '../repositories/fakes/FakeCustomerRepository';
 import CreateCustomerService from './CreateCustomerService';
 
@@ -20,5 +22,19 @@ describe('CreateCustomers', () => {
 		});
 
 		expect(customer).toHaveProperty('id');
+	});
+
+	it('should not be able to create a customer with one email thats already registered', async () => {
+		await createCustomer.execute({
+			name: 'John Doe',
+			email: 'johndoe@example.com',
+		});
+
+		await expect(
+			createCustomer.execute({
+				name: 'John Doe',
+				email: 'johndoe@example.com',
+			})
+		).rejects.toBeInstanceOf(AppError);
 	});
 });
