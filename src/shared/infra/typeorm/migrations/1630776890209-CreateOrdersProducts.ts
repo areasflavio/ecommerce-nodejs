@@ -1,27 +1,30 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export default class CreateCustomers1630493750471
+export default class CreateOrdersProducts1630776890209
 	implements MigrationInterface
 {
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.createTable(
 			new Table({
-				name: 'customers',
+				name: 'order_products',
 				columns: [
 					{
 						name: 'id',
-						type: 'uuid',
+						type: 'varchar',
 						isPrimary: true,
 						generationStrategy: 'uuid',
 						default: 'uuid_generate_v4()',
 					},
 					{
-						name: 'name',
-						type: 'varchar',
+						name: 'price',
+						type: 'decimal',
+						precision: 10,
+						scale: 2,
 					},
 					{
-						name: 'email',
-						type: 'varchar',
+						name: 'quantity',
+						type: 'int',
+						default: 0.0,
 					},
 					{
 						name: 'created_at',
@@ -39,6 +42,6 @@ export default class CreateCustomers1630493750471
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.dropTable('customers');
+		await queryRunner.dropTable('order_products');
 	}
 }
