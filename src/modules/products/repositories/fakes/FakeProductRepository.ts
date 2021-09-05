@@ -9,32 +9,47 @@ import IFindProducts from '@modules/products/dtos/IFindProducts';
 import IUpdateProductsQuantityDTO from '@modules/products/dtos/IUpdateProductsQuantityDTO';
 
 class ProductsRepository implements IProductsRepository {
-	private products: Product[] = [];
+	private repositoryProducts: Product[] = [];
 
 	public async create(data: ICreateProductDTO): Promise<Product> {
 		const product = new Product();
 
 		Object.assign(product, { id: uuid() }, data);
 
-		this.products.push(product);
+		this.repositoryProducts.push(product);
 
 		return product;
 	}
 
 	public async findByName(name: string): Promise<Product | undefined> {
-		const findProduct = this.products.find(product => product.name === name);
+		const findProduct = this.repositoryProducts.find(
+			product => product.name === name
+		);
 
 		return findProduct;
 	}
 
 	public async findAllById(products: IFindProducts[]): Promise<Product[]> {
-		throw new Error('Method not implemented.');
+		const productsIds = products.map(product => product.id);
+
+		const findProducts = this.repositoryProducts.filter(repoProduct =>
+			productsIds.includes(repoProduct.id)
+		);
+
+		return findProducts;
 	}
 
 	public async updateQuantity(
 		products: IUpdateProductsQuantityDTO[]
 	): Promise<Product[]> {
-		throw new Error('Method not implemented.');
+		this.repositoryProducts.forEach(repoProduct =>
+			products.forEach(product => {
+				if (product.id === repoProduct.id)
+					repoProduct.quantity = product.quantity;
+			})
+		);
+
+		return this.repositoryProducts;
 	}
 }
 
