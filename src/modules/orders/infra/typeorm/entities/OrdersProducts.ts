@@ -30,10 +30,10 @@ class OrdersProducts {
 	@JoinColumn({ name: 'product_id' })
 	product: Product;
 
-	@Column()
+	@Column('decimal')
 	price: number;
 
-	@Column()
+	@Column('int')
 	quantity: number;
 
 	@CreateDateColumn()
